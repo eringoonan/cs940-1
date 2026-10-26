@@ -30,4 +30,10 @@ class InvalidStationTypeError(TubeError):
     def __init__(self, obj):
         super().__init__(f'The given object {type(obj).__name__} is not a valid instance of Station')
 
+
+class InvalidBranchIdError(TubeError):
+    """raised to handle invalid branch id numbers, takes in the id"""
+    def __init__(self, branch_id):
+        super().__init__(f'Branch Id {branch_id} is not a valid integer')
+
 # data error sub classes
