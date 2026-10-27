@@ -30,11 +30,13 @@ class InvalidStationTypeError(TubeError):
     def __init__(self, obj):
         super().__init__(f'The given object {type(obj).__name__} is not a valid instance of Station')
 
-
+# invalid ID 
 class InvalidIdError(TubeError):
+    """exception used to handle invalid errors relating to IDs: branch, next branch, and station"""
     def __init__(self, idType, idValue, reason):
         self.idType = idType
         self.idValue = idValue
         self.reason = reason
         super().__init__(f'{self.idType} {self.idValue!r} is invalid: {self.reason}')
+
 # data error sub classes
