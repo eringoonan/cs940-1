@@ -33,7 +33,12 @@ class Branch():
         return edges
             
 
-    # def branch_edges(self) -> List[tuple[int, int]]:  returns the edges between this branch and its next branches.
+    def branch_edges(self) -> List[tuple[int, int]]:  
+        """returns the edges between this branch and its next branches"""
+        edges = []
+        for i in range(len(self.next_branch_ids)):
+            edges.append((self.branch_id, self.next_branch_ids[i]))
+        return edges
 
     # magic methods
         
