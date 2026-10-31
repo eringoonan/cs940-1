@@ -27,9 +27,10 @@ class Branch():
     
     def station_edges(self) -> List[tuple[str, str]]: 
         """returns the edges between stations on this branch"""
-        station_edges = []
-        for i in range (len(self.stations) - 1):
-            station_edges.append(self.stations.index(i), self.stations.index(i+1))
+        edges = []
+        for i in range(len(self.stations) - 1):
+            edges.append((self.stations[i], self.stations[i+1]))
+        return edges
             
 
     # def branch_edges(self) -> List[tuple[int, int]]:  returns the edges between this branch and its next branches.
