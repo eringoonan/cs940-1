@@ -1,5 +1,5 @@
 from typing import List
-from exceptions import InvalidIdError
+from exceptions import InvalidIdError, StationIndexError
 
 class Branch():
 
@@ -41,4 +41,23 @@ class Branch():
         return edges
 
     # magic methods
+    def __len__(self):
+        return len(self.stations)
+
+    def __iter__(self):
+        return iter(self.stations)
+
+    def __contains__(self, station_id):
+        if station_id not in self.stations:
+            return False
+        return True
+
+    def __getitem__(self, index):
+        if not isinstance(index, int) or isinstance(index, bool):
+            raise InvalidIdError("Index", index, "given type is not valid, must be an int")
+        
+        try:
+            return self.stations[index]
+        except IndexError as err:
+            raise StationIndexError(index) from err
         

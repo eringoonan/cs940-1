@@ -39,4 +39,9 @@ class InvalidIdError(TubeError):
         self.reason = reason
         super().__init__(f'{self.idType} {self.idValue!r} is invalid: {self.reason}')
 
+class StationIndexError(TubeError):
+    """exception used to handle an invalid index relating to stations/branches"""
+    def __init__(self, index):
+        super()._init__(f'{index} is an invalid index')
+
 # data error sub classes
