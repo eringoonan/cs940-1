@@ -44,4 +44,10 @@ class StationIndexError(TubeError):
     def __init__(self, index):
         super()._init__(f'{index} is an invalid index')
 
+class InvalidBranchDataType(TubeError):
+    def __init__(self, data_type, reason):
+        self.data_type = data_type
+        self.reason = reason
+        super().__init__(f'The given datatype {self.data_type} is invalid: {self.reason}')
+
 # data error sub classes

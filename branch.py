@@ -1,18 +1,21 @@
 from typing import List
-from exceptions import InvalidIdError, StationIndexError
+from exceptions import InvalidIdError, StationIndexError, InvalidBranchDataType
 
 class Branch():
 
     def __init__(self, branch_id:int, next_branch_ids:List[int]):
-        if not isinstance(branch_id, int):
+        if not isinstance(branch_id, int) or isinstance(branch_id, bool):
             raise InvalidIdError("Branch ID", branch_id, "must be an int")
 
-        for id in next_branch_ids:
-            if not isinstance(id, int):
+        if not isinstance(next_branch_ids, list):
+            raise InvalidBranchDataType(type(next_branch_ids), "must be a valid list of integers")
+
+        for next_id in next_branch_ids:
+            if not isinstance(next_id, int) or isinstance(next_id, bool):
                 raise InvalidIdError("Next branch ID", id, "must be an int")
 
         self.branch_id = branch_id
-        self.next_branch_ids = next_branch_ids
+        self.next_branch_ids = list(next_branch_ids)
         self.stations : List[str] = []
 
     def add_station(self, station:str):
@@ -48,9 +51,7 @@ class Branch():
         return iter(self.stations)
 
     def __contains__(self, station_id):
-        if station_id not in self.stations:
-            return False
-        return True
+        return station_id in self.stations  
 
     def __getitem__(self, index):
         if not isinstance(index, int) or isinstance(index, bool):
@@ -60,4 +61,6 @@ class Branch():
             return self.stations[index]
         except IndexError as err:
             raise StationIndexError(index) from err
-        
+
+    def __repr__(self):
+        return f"Branch(branch_id={self.branch_id!r}, next_branch_ids={self.next_branch_ids!r}, stations={self.stations!r})"
