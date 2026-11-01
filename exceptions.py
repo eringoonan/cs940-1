@@ -44,10 +44,22 @@ class StationIndexError(TubeError):
     def __init__(self, index):
         super()._init__(f'{index} is an invalid index')
 
-class InvalidBranchDataType(TubeError):
+class InvalidDataType(TubeError):
     def __init__(self, data_type, reason):
         self.data_type = data_type
         self.reason = reason
         super().__init__(f'The given datatype {self.data_type} is invalid: {self.reason}')
+
+class DuplicateBranchError(TubeError):
+    def __init__(self, branch_id, line_id):
+        self.branch_id = branch_id
+        self.line_id = line_id
+        super().__init__(f'Branch {self.branch_id} already exists in line {self.line_id!r}')
+
+class BranchNotFoundError(TubeError):
+    def __init__(self, branch_id, line_id):
+        self.branch_id = branch_id
+        self.line_id = line_id
+        super().__init__(f'Branch {self.branch_id} not found on line {self.line_id!r}')
 
 # data error sub classes

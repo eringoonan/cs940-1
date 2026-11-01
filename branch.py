@@ -8,7 +8,7 @@ class Branch():
             raise InvalidIdError("Branch ID", branch_id, "must be an int")
 
         if not isinstance(next_branch_ids, list):
-            raise InvalidBranchDataType(type(next_branch_ids), "must be a valid list of integers")
+            raise InvalidDataType(type(next_branch_ids), "must be a valid list of integers")
 
         for next_id in next_branch_ids:
             if not isinstance(next_id, int) or isinstance(next_id, bool):
