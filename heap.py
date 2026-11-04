@@ -29,3 +29,14 @@ class Heap():
                 self._tree[index], self._tree[parent] = self._tree[parent], self._tree[index]
                 index = parent
             else: return
+
+    def _sift_down(self, index: int) -> None:
+        """"""
+        while True:
+            left = 2 * index + 1
+            if left >= len(self._tree): return
+            smallest = left
+            if(left + 1 < len(self._tree)) and (self._less(self._tree[left+1], self._tree[left])): smallest = left+1
+            if not self._less(self._tree[smallest], self._tree[index]): return
+            self._tree[smallest], self._tree[index] = self._tree[index], self._tree[smallest]
+            index = smallest
