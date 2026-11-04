@@ -1,5 +1,5 @@
 from typing import List
-from exceptions import InvalidIdError, StationIndexError, InvalidBranchDataType
+from exceptions import InvalidIdError, StationIndexError, InvalidDataType
 
 class Branch():
 

@@ -7,6 +7,12 @@ class Line():
 
     # initalise method
     def __init__(self, line_id:str, line_name:str):
+        if not isinstance(line_id, str):
+            raise InvalidDataType(type(line_id), "Must be a valid string")
+
+        if not isinstance(line_name, str):
+            raise InvalidDataType(type(line_name), "Must be a valid string")
+                
         if not line_id.strip():
             raise InvalidIdError("Line ID", line_id, "Must be a valid string")
 
@@ -51,13 +57,13 @@ class Line():
 
     def __len__(self):
         """returns the length of individual stations on a line"""
-        return len(self.get_stations)
+        return len(self.get_stations())
 
     def __contains__(self, station_id):
         return station_id in self.get_stations()
 
     def __iter__(self):
-        return iter(sorted(self.get_stations))
+        return iter(sorted(self.get_stations()))
 
     def __repr__(self):
         return f"Line(line_id={self.line_id!r}, line_name={self.line_name!r}, branch_count={len(self.branches)!r})"

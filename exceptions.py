@@ -42,7 +42,7 @@ class InvalidIdError(TubeError):
 class StationIndexError(TubeError):
     """exception used to handle an invalid index relating to stations/branches"""
     def __init__(self, index):
-        super()._init__(f'{index} is an invalid index')
+        super().__init__(f'{index} is an invalid index')
 
 class InvalidDataType(TubeError):
     def __init__(self, data_type, reason):
