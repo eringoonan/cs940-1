@@ -5,6 +5,7 @@ from branch import Branch
 
 class Line():
 
+    # initalise method
     def __init__(self, line_id:str, line_name:str):
         if not line_id.strip():
             raise InvalidIdError("Line ID", line_id, "Must be a valid string")
@@ -16,7 +17,9 @@ class Line():
         self.line_name = line_name
         self.branches: dict[int, Branch] = {}
 
+    # branch methods
     def add_branch(self, branch:Branch) -> None:
+        """used to add a new branch to an instance of line, take in a branch and add it to a dict of branches"""
         if not isinstance(branch, Branch):
             raise InvalidDataType(type(branch), "Must be an instance of Branch")
 
@@ -26,6 +29,7 @@ class Line():
         self.branches[branch.branch_id] = branch
 
     def get_branch(self, id: int) -> Branch:
+        """used to retrieve a branch from the dict using an ID"""
         if not isinstance(id, int) or isinstance(id, bool):
             raise InvalidIdError(type(id), id, "Must be a valid int")
         
@@ -35,9 +39,12 @@ class Line():
         return self.branches[id]
 
     def get_stations(self) -> Set[str]:
+        """returns a set of stations retrieved from the branch items in the branch dict"""
         stations = set()
 
         for branch in self.branches.values():
             stations.update(branch)
 
         return stations
+
+    # magic methods
