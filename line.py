@@ -48,3 +48,16 @@ class Line():
         return stations
 
     # magic methods
+
+    def __len__(self):
+        """returns the length of individual stations on a line"""
+        return len(self.get_stations)
+
+    def __contains__(self, station_id):
+        return station_id in self.get_stations()
+
+    def __iter__(self):
+        return iter(sorted(self.get_stations))
+
+    def __repr__(self):
+        return f"Line(line_id={self.line_id!r}, line_name={self.line_name!r}, branch_count={len(self.branches)!r})"
