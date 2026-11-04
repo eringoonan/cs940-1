@@ -63,3 +63,6 @@ class BranchNotFoundError(TubeError):
         super().__init__(f'Branch {self.branch_id} not found on line {self.line_id!r}')
 
 # data error sub classes
+class HeapError(DataStructureError):
+    """used to raise errors regarding heap data structure, popping or peeking an empty heap, or passing an invalid k or malformed items"""
+    
