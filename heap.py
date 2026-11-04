@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, List
 from exceptions import HeapError
 
 class Heap():
@@ -31,7 +31,7 @@ class Heap():
             else: return
 
     def _sift_down(self, index: int) -> None:
-        """"""
+        """take an index and sift the value at index down the tree until it reaches the correct spot"""
         while True:
             left = 2 * index + 1
             if left >= len(self._tree): return
@@ -40,3 +40,27 @@ class Heap():
             if not self._less(self._tree[smallest], self._tree[index]): return
             self._tree[smallest], self._tree[index] = self._tree[index], self._tree[smallest]
             index = smallest
+
+    def pop(self) -> Any:
+        """removes the root and assigns the last element as the new root, then sifts down until it is in the correct pos"""
+        if len(self._tree) == 0:
+            raise HeapError("cannot pop from empty heap")
+
+        root = self._tree[0]
+        last = self._tree.pop()
+
+        if len(self._tree) == 0: return root[2]
+
+        self._tree[0] = last
+        self._sift_down(0)
+
+        return root[2]
+
+    def peek(self) -> Any:
+        """"""
+
+    def ksmallest(self, k: int) -> List[Any]:
+        """"""
+
+    def heapify(cls, items: List) -> "Heap":  
+        """"""
