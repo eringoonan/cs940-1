@@ -71,6 +71,26 @@ class Heap():
 
     def ksmallest(self, k: int) -> List[Any]:
         """"""
+        if not isinstance(k, int) or isinstance(k, bool) or k < -1:
+            raise HeapError("k must be a valid instance of int and be >= -1")
+
+        if k == -1: k = len(self)
+        if k > len(self): k = len(self)
+        if k == 0: return []
+
+        options = Heap()
+        options.push(self._tree[0][:2], 0)
+        ksmallest = []
+
+        for i in range(k):
+            current = options.pop()
+            ksmallest.append(self._tree[current][2])
+            left = 2 * current + 1 
+            right = 2 * current + 2
+            if left < len(self._tree): options.push(self._tree[left][:2], left)
+            if right < len(self._tree): options.push(self._tree[right][:2], right)
+
+        return ksmallest
 
     @classmethod
     def heapify(cls, items: List) -> "Heap":  
