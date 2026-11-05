@@ -9,6 +9,12 @@ class Heap():
     def __len__(self):
         return len(self._tree)
 
+    def __bool__(self):
+        """"""
+
+    def __repr__(self):
+        """"""
+
     def push(self, key, obj) -> None:
         """create a new entry, key, sequence (insertion order), and object, pushed up into the correct spot"""
         entry = (key, self._counter, obj)
