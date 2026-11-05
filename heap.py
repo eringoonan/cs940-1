@@ -72,5 +72,23 @@ class Heap():
     def ksmallest(self, k: int) -> List[Any]:
         """"""
 
+    @classmethod
     def heapify(cls, items: List) -> "Heap":  
         """"""
+        heap = cls()
+        entries = []
+
+        # verify input is valid
+        if not isinstance(items, list): raise HeapError("Items must be a valid instance of List")
+        for i, item in enumerate(items):
+            if not isinstance(item, (tuple, list)) or len(item) != 2:
+                raise HeapError(f"Invalid item pair at position {i}")
+            entries.append((item[0], i, item[1]))
+
+        heap._tree = entries
+        for i in range(len(heap) // 2 - 1, -1, -1): # stop at -1 (include root 0) and decrease instead of increase
+            heap._sift_down(i)
+
+        heap._counter = len(heap._tree)
+
+        return heap
