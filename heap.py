@@ -57,7 +57,11 @@ class Heap():
         return root[2]
 
     def peek(self) -> Any:
-        """"""
+        """returns the root object without removing it"""
+        if len(self._tree) == 0:
+            raise HeapError("cannot peek from empty heap")
+
+        return self._tree[0][2]
 
     def ksmallest(self, k: int) -> List[Any]:
         """"""
