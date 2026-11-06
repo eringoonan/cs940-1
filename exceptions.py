@@ -65,4 +65,17 @@ class BranchNotFoundError(TubeError):
 # data error sub classes
 class HeapError(DataStructureError):
     """used to raise errors regarding heap data structure, popping or peeking an empty heap, or passing an invalid k or malformed items"""
-    
+
+class InvalidTrieKeyError(DataStructureError):
+    """used to raise errors regarding invalid trie keys, with invalid formatting, empty keys or invalid whitespace"""
+    def __init__(self, key, msg):
+        self.key = key
+        self.msg = msg
+        super().__init__(f'The given key {self.key!r} is invalid: {self.msg}')
+
+class InvalidPrefixTypeError(DataStructureError):
+    """used to raise errors regarding trie prefixes, including invalid types and invalid formatting"""
+    def __init__(self, prefix, msg):
+        self.prefix = prefix
+        self.msg = msg
+        super().__init__(f'The given prefix {self.prefix!r} is invalid: {self.msg}')
