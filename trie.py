@@ -47,3 +47,23 @@ class Trie():
 
     def search_by_prefix(self, prefix: str) -> List[Any]:
         """"""
+        if not isinstance(prefix, str):
+            raise InvalidPrefixTypeError(prefix, "Prefix must be a valid instance of string")
+
+        node = self._root
+        for char in prefix:
+            if char not in node.children: return []
+            node = node.children[char]
+
+        stack = [node]
+        matches = {}
+        while len(stack) > 0:
+            current = stack.pop()
+            for entry_id, obj in current.entries: 
+                key = id(obj)
+                if key not in matches or entry_id < matches[key][0]:
+                    matches[key] = (entry_id, obj)
+            for child in current.children.values(): stack.append(child)
+
+        matches_sorted = sorted(matches.values(), key=lambda pair: pair[0])
+        return [obj for _, obj in matches_sorted]
