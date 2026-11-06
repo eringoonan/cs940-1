@@ -9,11 +9,14 @@ class Heap():
     def __len__(self):
         return len(self._tree)
 
-    def __bool__(self):
-        """"""
+    def __bool__(self) -> bool:
+        """verify that there is at least one entry within the heap"""
+        return len(self._tree) >= 1
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """"""
+        if len(self._tree) < 1: return f"Heap(size={len(self._tree)})"
+        return f"Heap(size={len(self._tree)}, root_key={self._tree[0][0]!r})"
 
     def push(self, key, obj) -> None:
         """create a new entry, key, sequence (insertion order), and object, pushed up into the correct spot"""
@@ -70,7 +73,7 @@ class Heap():
         return self._tree[0][2]
 
     def ksmallest(self, k: int) -> List[Any]:
-        """"""
+        """take in a number and return smallest members of heap for that number, creates a secondary heap with available options and continually pops the root for instances of k"""
         if not isinstance(k, int) or isinstance(k, bool) or k < -1:
             raise HeapError("k must be a valid instance of int and be >= -1")
 
@@ -79,22 +82,22 @@ class Heap():
         if k == 0: return []
 
         options = Heap()
-        options.push(self._tree[0][:2], 0)
+        options.push(self._tree[0][:2], 0) # takes roots key/seq and sets it was root in new tree
         ksmallest = []
 
         for i in range(k):
             current = options.pop()
-            ksmallest.append(self._tree[current][2])
-            left = 2 * current + 1 
+            ksmallest.append(self._tree[current][2]) # add the obj value at the smallest index (current is index, 2 is the obj)
+            left = 2 * current + 1 # create index values for left and right
             right = 2 * current + 2
-            if left < len(self._tree): options.push(self._tree[left][:2], left)
+            if left < len(self._tree): options.push(self._tree[left][:2], left) # verify left/right exist and then add key/seq at that index to options
             if right < len(self._tree): options.push(self._tree[right][:2], right)
 
         return ksmallest
 
     @classmethod
     def heapify(cls, items: List) -> "Heap":  
-        """"""
+        """takes in a list of items and returns an instance of heap"""
         heap = cls()
         entries = []
 
