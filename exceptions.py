@@ -45,35 +45,38 @@ class StationIndexError(TubeError):
         super().__init__(f'{index} is an invalid index')
 
 class InvalidDataType(TubeError):
+    """handle invalid datatypes, take in the type and the message as to why it is invalid"""
     def __init__(self, data_type, reason):
         self.data_type = data_type
         self.reason = reason
         super().__init__(f'The given datatype {self.data_type} is invalid: {self.reason}')
 
 class DuplicateBranchError(TubeError):
+    """handle duplicates within the branch class, take in branch and line id"""
     def __init__(self, branch_id, line_id):
         self.branch_id = branch_id
         self.line_id = line_id
         super().__init__(f'Branch {self.branch_id} already exists in line {self.line_id!r}')
 
 class BranchNotFoundError(TubeError):
+    """handle branch not found on a line erropr, take in branch and line id"""
     def __init__(self, branch_id, line_id):
         self.branch_id = branch_id
         self.line_id = line_id
         super().__init__(f'Branch {self.branch_id} not found on line {self.line_id!r}')
 
 class LineNotFoundError(TubeError):
-    """"""
+    """handle line not found in network class, take in the line id"""
     def __init__(self, line_id):
         super().__init__(f'Line {line_id} not found')
 
 class StationNotFoundError(TubeError):
-    """"""
+    """handle station not found in the network class, take in a station id"""
     def __init__(self, station_id):
         super.__init__(f'Station ID {station_id} not found')
 
 class StationNotOnLineError(TubeError):
-    """"""
+    """handle station not found on line in the network class, take in station and line ids"""
     def __init__(self, station_id, line_id):
         self.station_id = station_id
         self.line_id = line_id

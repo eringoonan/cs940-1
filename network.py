@@ -12,7 +12,7 @@ from exceptions import InvalidDataType, LineNotFoundError, StationNotFoundError,
 class Network():
 
     def __init__(self):
-        """"""
+        """intialise the network class, create several dictionaries and a trie used to store classes and datastructures on the network"""
         self._lines: Dict[str, Line] = {}
         self._stations: Dict[str, Station] = {}
 
@@ -25,7 +25,7 @@ class Network():
 
 
     def add_line(self, line: Line) -> None:
-        """"""
+        """take in an instance of the line class, verify the type and add it to the network line dictionary by line_id"""
         if not isinstance(line, Line):
             raise InvalidDataType(type(line), "Must be a valid instance of the line class")
 
@@ -35,7 +35,7 @@ class Network():
 
 
     def get_line(self, line_id: str) -> Line:
-        """"""
+        """take in a line id, verify the existence in lines and then return the instance of the line class associated with it"""
         if not isinstance(line_id, str):
             raise InvalidDataType(type(line_id), "Must be a valid instance of string")
 
@@ -46,7 +46,7 @@ class Network():
     
 
     def add_station(self, station: Station) -> None:
-        """"""
+        """take in an instance of the station class, verify the type and add it to the network station dictionary by station_id, normalise the station name then push it to the trie"""
         if not isinstance(station, Station):
             raise InvalidDataType(type(station), "Must be a valid instance of the station class")
 
@@ -60,7 +60,7 @@ class Network():
 
 
     def get_station(self, station_id: str) -> Station:
-        """"""
+        """take in a station id, verify the existence in stations and then return the instance of the station class associated with it"""
         if not isinstance(station_id, str):
             raise InvalidDataType(type(station_id), "Must be a valid instance of string")
 
@@ -68,7 +68,7 @@ class Network():
             raise StationNotFoundError(station_id)
 
     def add_prediction(self, prediction: Prediction) -> None:
-        """"""
+        """take in an instance of the prediction class, extract key details and use them to insert the prediction into related heap structures"""
         if not isinstance(prediction, Prediction):
             raise InvalidDataType(type(prediction), "Must be a valid instance of the predicition class")
 
@@ -103,7 +103,7 @@ class Network():
 
 
     def search_by_prefix(self, prefix: str) -> List[Station]:
-        """"""
+        """takes in a prefix, normalises it and then calls the trie search by prefix method to retrieve relevant objects"""
 
         if not isinstance(prefix, str):
             raise InvalidDataType(type(prefix), "Must be a valid instance of string")
@@ -116,7 +116,7 @@ class Network():
 
 
     def next_arrivals_by_station(self, station_id: str, k: int) -> List[Prediction]:
-        """"""
+        """take in a station id and a number of requested values (k) and return the ksmallest list of predictions from the appropriate heap"""
         self._validate_k(k)
 
         if not isinstance(station_id, str):
@@ -131,7 +131,7 @@ class Network():
 
     
     def next_arrivals_by_line(self, line_id: str, k: int) -> List[Prediction]:
-        """"""
+        """take in a line id and a number of requested values (k) and return the ksmallest list of predictions from the appropriate heap"""
 
         self._validate_k(k)
 
@@ -147,7 +147,7 @@ class Network():
     
 
     def next_arrivals_by_station_and_line(self, station_id: str, line_id: str, k:int) -> List[Prediction]:
-        """"""
+        """take in a station id, a line id, and a number of requested values (k) and return the ksmallest list of predictions from the appropriate heap"""
         self._validate_k(k)
 
         if not isinstance(station_id, str): raise InvalidDataType(type(station_id), "Must be a valid instance of string")
@@ -164,7 +164,7 @@ class Network():
 
 
     def next_stations_by_train(self, vehicle_id: str, line_id: str, k: int) -> List[Prediction]:
-        """"""
+        """take in a vehicle id, a line id, and a number of requested values (k) and return the ksmallest list of predictions from the appropriate heap"""
         self._validate_k(k)
 
         if not isinstance(vehicle_id, str): raise InvalidDataType(type(vehicle_id), "Must be a valid instance of string")
@@ -179,6 +179,7 @@ class Network():
         return self._pred_by_train[train].ksmallest(k)
 
     def _validate_k(self, k):
+        """take in an int k and validate the datatype and the range"""
         if not isinstance(k, int) or isinstance(k, bool):
             raise InvalidDataType(type(k), k, "Must be a valid integer -1 or greater")
 
@@ -187,6 +188,7 @@ class Network():
 
     @staticmethod
     def _normalise_text(text: str):
+        """take in a string, turn it to lower case, remove /- and extra whitespace and return a new cleaned string"""
         text = text.lower()
 
         text = text.replace('/', ' ').replace('-', ' ')

@@ -7,6 +7,7 @@ class Heap():
         self._counter = 0
 
     def __len__(self):
+        """return the length of self._tree (the heap)"""
         return len(self._tree)
 
     def __bool__(self) -> bool:
