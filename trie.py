@@ -3,20 +3,23 @@ from typing import Any, List
 from exceptions import InvalidTrieKeyError, InvalidPrefixTypeError
 
 class _Node():
+    """node used within the trie data structure, containing a dict of child nodes and a list of entries"""
     def __init__(self):
         self.children = {}
         self.entries = []
 
 
 class Trie():
-    """"""
+    """class defining a trie data structure including methods to insert items and search by a prefix"""
     def __init__(self):
-        """"""
+        """init function assigns new node as the root and initialises a couner to zero"""
         self._root = _Node()
         self._counter = 0
 
     def insert(self, key: str, obj: Any) -> None:
-        """"""
+        """takes a key and an object and inserts into a trie data structure, self._counter is used as an insertion ID"""
+
+        # validation
         if not isinstance(key, str):
             raise InvalidTrieKeyError(key, "Key must be an instance of string")
 
@@ -29,8 +32,9 @@ class Trie():
         if "\t" in key or "\n" in key:
             raise InvalidTrieKeyError(key, "Key must not have tab or new line spacing")
 
+        # entry id set to current counter
         entry_id = self._counter
-        self._counter += 1
+        self._counter += 1 # counter increased
 
         words = key.split(' ')
 
@@ -46,7 +50,7 @@ class Trie():
 
 
     def search_by_prefix(self, prefix: str) -> List[Any]:
-        """"""
+        """takes in a prefix and returns all objects for which at least one word in the associated key begins with prefix"""
         if not isinstance(prefix, str):
             raise InvalidPrefixTypeError(prefix, "Prefix must be a valid instance of string")
 
