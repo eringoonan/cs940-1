@@ -62,6 +62,24 @@ class BranchNotFoundError(TubeError):
         self.line_id = line_id
         super().__init__(f'Branch {self.branch_id} not found on line {self.line_id!r}')
 
+class LineNotFoundError(TubeError):
+    """"""
+    def __init__(self, line_id):
+        super().__init__(f'Line {line_id} not found')
+
+class StationNotFoundError(TubeError):
+    """"""
+    def __init__(self, station_id):
+        super.__init__(f'Station ID {station_id} not found')
+
+class StationNotOnLineError(TubeError):
+    """"""
+    def __init__(self, station_id, line_id):
+        self.station_id = station_id
+        self.line_id = line_id
+        super.__init__(f'Station {self.station_id} not found on line: {self.line_id}')
+
+
 # data error sub classes
 class HeapError(DataStructureError):
     """used to raise errors regarding heap data structure, popping or peeking an empty heap, or passing an invalid k or malformed items"""
