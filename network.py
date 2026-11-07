@@ -6,7 +6,7 @@ from prediction import Prediction
 from station import Station
 from trie import Trie
 
-from exceptions import InvalidDataType, LineNotFoundError, StationNotFoundError, InvalidIdError, StationNotOnLineError
+from exceptions import InvalidDataType, LineNotFoundError, StationNotFoundError, StationNotOnLineError
 
 
 class Network():
@@ -67,6 +67,8 @@ class Network():
         if station_id not in self._stations:
             raise StationNotFoundError(station_id)
 
+        return self._stations[station_id]
+
     def add_prediction(self, prediction: Prediction) -> None:
         """take in an instance of the prediction class, extract key details and use them to insert the prediction into related heap structures"""
         if not isinstance(prediction, Prediction):
@@ -111,8 +113,7 @@ class Network():
         normalised_prefix = self._normalise_text(prefix)
         results = self._name_trie.search_by_prefix(normalised_prefix)
 
-        sorted(results, key=lambda s: s.station_name)
-        return results
+        return sorted(results, key=lambda s: s.station_name)
 
 
     def next_arrivals_by_station(self, station_id: str, k: int) -> List[Prediction]:
@@ -181,13 +182,13 @@ class Network():
     def _validate_k(self, k):
         """take in an int k and validate the datatype and the range"""
         if not isinstance(k, int) or isinstance(k, bool):
-            raise InvalidDataType(type(k), k, "Must be a valid integer -1 or greater")
+            raise InvalidDataType(type(k), "Must be a valid integer -1 or greater")
 
         if k < -1:
-            raise InvalidDataType(type(k), k, "Must be a valid integer -1 or greater")
+            raise InvalidDataType(type(k), "Must be a valid integer -1 or greater")
 
     @staticmethod
-    def _normalise_text(text: str):
+    def _normalise_text(text: str) -> str:
         """take in a string, turn it to lower case, remove /- and extra whitespace and return a new cleaned string"""
         text = text.lower()
 
@@ -198,4 +199,7 @@ class Network():
         new_text = " ".join(new_text.split())
 
         return new_text
+
+    def __repr__(self):
+        return f"Network Class, Stations={len(self._stations)}, Lines={len(self._lines)}"
 

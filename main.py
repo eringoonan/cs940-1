@@ -40,7 +40,7 @@ def main():
         tube.add_line(line_obj)
 
     # Populate our predictions to our network
-    with open(f'{path_to_jsons}/arrivals.json', 'r') as f:
+    with open('/modules/cs940/cw1/arrivals/arrivals-5846408.json', 'r') as f:
         obj = json.load(f)
 
     for arrival in obj:
@@ -68,7 +68,9 @@ def main():
 
     print('---- Where is train 012 on the District line going next? (in order) ---- ')
     # note that you might not have a train 012 in the district line in your arrivals.json - change this accordingly.
-    pprint(tube.next_stations_by_train(vehicle_id='012', line_id='district', k=10))
+    pprint(tube.next_stations_by_train(vehicle_id='010', line_id='district', k=10))
+
+    pprint(tube.next_arrivals_by_line('district', k=3))
 
 
 if __name__ == '__main__':

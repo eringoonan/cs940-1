@@ -73,14 +73,14 @@ class LineNotFoundError(TubeError):
 class StationNotFoundError(TubeError):
     """handle station not found in the network class, take in a station id"""
     def __init__(self, station_id):
-        super.__init__(f'Station ID {station_id} not found')
+        super().__init__(f'Station ID {station_id} not found')
 
 class StationNotOnLineError(TubeError):
     """handle station not found on line in the network class, take in station and line ids"""
     def __init__(self, station_id, line_id):
         self.station_id = station_id
         self.line_id = line_id
-        super.__init__(f'Station {self.station_id} not found on line: {self.line_id}')
+        super().__init__(f'Station {self.station_id} not found on line: {self.line_id}')
 
 
 # data error sub classes
