@@ -24,12 +24,6 @@ class InvalidCoordError(TubeError):
         self.msg = msg
         super().__init__(f'{self.field} {self.value!r} {self.msg} {self.COORDINATE_RANGES.get(field, "unknown coordinate")}')
 
-# invalid station
-class InvalidStationTypeError(TubeError):
-    """raised to handle invalid instances of the Station class, takes in object"""
-    def __init__(self, obj):
-        super().__init__(f'The given object {type(obj).__name__} is not a valid instance of Station')
-
 # invalid ID 
 class InvalidIdError(TubeError):
     """exception used to handle invalid errors relating to IDs: branch, next branch, and station"""
@@ -39,11 +33,13 @@ class InvalidIdError(TubeError):
         self.reason = reason
         super().__init__(f'{self.idType} {self.idValue!r} is invalid: {self.reason}')
 
+# invalid station index
 class StationIndexError(TubeError):
     """exception used to handle an invalid index relating to stations/branches"""
     def __init__(self, index):
         super().__init__(f'{index} is an invalid index')
 
+# invalid data type
 class InvalidDataType(TubeError):
     """handle invalid datatypes, take in the type and the message as to why it is invalid"""
     def __init__(self, data_type, reason):
@@ -51,6 +47,7 @@ class InvalidDataType(TubeError):
         self.reason = reason
         super().__init__(f'The given datatype {self.data_type} is invalid: {self.reason}')
 
+# duplicate branch
 class DuplicateBranchError(TubeError):
     """handle duplicates within the branch class, take in branch and line id"""
     def __init__(self, branch_id, line_id):
@@ -58,8 +55,9 @@ class DuplicateBranchError(TubeError):
         self.line_id = line_id
         super().__init__(f'Branch {self.branch_id} already exists in line {self.line_id!r}')
 
+# not found errors
 class BranchNotFoundError(TubeError):
-    """handle branch not found on a line erropr, take in branch and line id"""
+    """handle branch not found on a line error, take in branch and line id"""
     def __init__(self, branch_id, line_id):
         self.branch_id = branch_id
         self.line_id = line_id
@@ -81,7 +79,6 @@ class StationNotOnLineError(TubeError):
         self.station_id = station_id
         self.line_id = line_id
         super().__init__(f'Station {self.station_id} not found on line: {self.line_id}')
-
 
 # data error sub classes
 class HeapError(DataStructureError):

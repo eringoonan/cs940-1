@@ -3,7 +3,7 @@ from numbers import Real
 from decimal import Decimal
 import math
 from typing import List
-from exceptions import InvalidCoordError, TubeError, InvalidStationTypeError
+from exceptions import InvalidCoordError, InvalidDataType
 
 class Station():
     TUBE_LINES = frozenset({"bakerloo", "central", "circle", "district", 
@@ -42,7 +42,7 @@ class Station():
     def distance_to(self, other:"Station") -> float:
         """used to calculate distance from one station to another, takes in an instance of another station and itself, calculating using lon/lat from both"""
         if not isinstance(other, Station):
-            raise InvalidStationTypeError(other)
+            raise InvalidDataType(type(other), "Must be a valid instance of the Station class")
 
         lon_self, lat_self, lon_other, lat_other = map(math.radians, [self.lon, self.lat, other.lon, other.lat])
 
